@@ -1,0 +1,13 @@
+VPATH += keyboards/gboards
+ENCODER_MAP_ENABLE = yes
+
+#MACCEL_ENABLE = yes
+#MACCEL_VIA_ENABLE = yes
+
+VIA_ENABLE = yes
+
+#ACHORDION_ENABLE = yes
+
+COMBO_ENABLE = yes
+
+USER_NAME := burkfers
