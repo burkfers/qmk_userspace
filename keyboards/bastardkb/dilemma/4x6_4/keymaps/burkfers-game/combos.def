@@ -1,0 +1,3 @@
+COMB(game_zx_t,             KC_T,                      KC_Z, KC_X)
+COMB(game_rf_g,             KC_G,                      KC_R, KC_F)
+COMB(game_fv_b,             KC_B,                      KC_F, KC_V)
