@@ -17,32 +17,24 @@
 #include "keycodes.h"
 #include QMK_KEYBOARD_H
 #include "burkfers.h"
+#include "keymap_german.h"
 
 #define TD_BOOT TD(U_TD_BOOT)
 #define TD_CLR TD(U_TD_CLR)
 #define TD_MAKE TD(U_TD_MAKE)
 #define TD_SYSR TD(U_TD_SYSRQ)
 
-#define ALGR_W RALT_T(KC_W)
-#define ALGR_O RALT_T(KC_O)
 #define ___GACS_L___(k01, k02, k03, k04) LGUI_T(KC_##k01), LALT_T(KC_##k02), LCTL_T(KC_##k03), LSFT_T(KC_##k04)
 #define ___GACS_R___(k01, k02, k03, k04) RSFT_T(KC_##k01), RCTL_T(KC_##k02), LALT_T(KC_##k03), RGUI_T(KC_##k04)
-#define ALG(k01) RALT_T(KC_##k01)
 
 #define PT_TOGG TG(LAYER_POINTER)
 
 #define LAYOUT_wrapper(...) LAYOUT(__VA_ARGS__)
 
-#define LAYER_QWERTY LAYER_BASE
-#define LAYER_CANARY LAYER_BASE2
-#define LAYER_APTMAK LAYER_BASE3
+#define LAYER_APTMAK LAYER_BASE
 
 #define LAYER_SYMNUM LAYER_NUM
 #define LAYER_NUM2 LAYER_SYM
-
-#define DF_QWER KC_LAYER_BASE
-#define DF_CANA KC_LAYER_BASE2
-#define DF_APTM KC_LAYER_BASE3
 
 #define M_NUM2 LT(LAYER_NUM2, KC_M)
 
@@ -56,7 +48,7 @@
 #define THUMR3 LT(LAYER_FUN, KC_DEL)
 
 enum km_layers {
-    LAYER_WM = LAYER_KM
+    LAYER_WM = LAYER_KM,
 };
 
 #define HLPAPTM LGUI(LALT(KC_F2))
@@ -67,54 +59,31 @@ enum km_layers {
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-  [LAYER_QWERTY] = LAYOUT_wrapper(
-  // ╭─────────────────────────────────────────────╮ ╭──────────────────────────────────────────────╮
-          KC_Q,  ALGR_W,    KC_E,    KC_R,    KC_T,       KC_Y,    KC_U,    KC_I,  ALGR_O,    KC_P,
-  // ├─────────────────────────────────────────────┤ ├──────────────────────────────────────────────┤
-        ___GACS_L___(   A,   S,   D,   F),    KC_G,       KC_H, ___GACS_R___(   J,   K,    L, QUOT),
-  // ├─────────────────────────────────────────────┤ ├──────────────────────────────────────────────┤
-          KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,       KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,
-  // ╰─────────────────────────────────────────────┤ ├──────────────────────────────────────────────╯
-                          THUML3,  THUML1,  THUML2,     THUMR1,  THUMR2
-  //                   ╰───────────────────────────╯ ╰──────────────────╯
-  ),
-  [LAYER_CANARY] = LAYOUT_wrapper(
-  // ╭─────────────────────────────────────────────╮ ╭──────────────────────────────────────────────╮
-          KC_W,  ALG(L),    KC_Y,    KC_P,    KC_B,       KC_Z,    KC_F,    KC_O,  ALG(U), KC_QUOT,
-  // ├─────────────────────────────────────────────┤ ├──────────────────────────────────────────────┤
-               ___GACS_L___(C, R, S, T),      KC_G,       KC_M,      ___GACS_R___(N, E, I, A),
-  // ├─────────────────────────────────────────────┤ ├──────────────────────────────────────────────┤
-          KC_Q,    KC_J,    KC_V,    KC_D,    KC_K,       KC_X,    KC_H, KC_SLSH, KC_COMM,  KC_DOT,
-  // ╰─────────────────────────────────────────────┤ ├──────────────────────────────────────────────╯
-                          THUML3,  THUML1,  THUML2,     THUMR1,  THUMR2
-  //                   ╰───────────────────────────╯ ╰──────────────────╯
-  ),
   [LAYER_APTMAK] = LAYOUT_wrapper(
   // ╭─────────────────────────────────────────────╮ ╭──────────────────────────────────────────────╮
-        QK_REP,  ALG(W),    KC_F,    KC_P,    KC_B,       KC_J,    KC_L,    KC_U,  ALG(Y), KC_QUOT,
+        QK_REP,  RALT_T(KC_W),    KC_F,    KC_P,    KC_B,       KC_J,    KC_L,    KC_U,  RALT_T(DE_Y), DE_QUOT,
   // ├─────────────────────────────────────────────┤ ├──────────────────────────────────────────────┤
         ___GACS_L___(R,    S,    T,    H),    KC_K,       KC_X,    ___GACS_R___(N,   A,   I,    O),
   // ├─────────────────────────────────────────────┤ ├──────────────────────────────────────────────┤
-       HLPAPTM,    KC_C,    KC_G,    KC_D,    KC_Q,       KC_Z,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,
+       XXXXXXX,    KC_C,    KC_G,    KC_D,    KC_Q,       DE_Z,    KC_M, KC_COMM,  DE_DOT, DE_SLSH,
   // ╰─────────────────────────────────────────────┤ ├──────────────────────────────────────────────╯
                  MO(LAYER_MEDIA),  THUML1,  LT(LAYER_NAV, KC_ESC),   LT(LAYER_SYMNUM, KC_BSPC), LT(LAYER_SYMNUM, KC_E)
   //                   ╰───────────────────────────╯ ╰──────────────────╯
   ),
-  [LAYER_SYMNUM] = LAYOUT(
+  [LAYER_SYMNUM] = LAYOUT_wrapper(
   // ╭─────────────────────────────────────────────╮ ╭──────────────────────────────────────────────╮
-       KC_EXLM,   KC_AT, KC_HASH,  KC_DLR, KC_PERC,    KC_SLSH,    KC_7,    KC_8,    KC_9, KC_COMM,
+       DE_EXLM,   DE_AT, DE_HASH,  DE_DLR, DE_PERC,    DE_SLSH,    KC_7,    KC_8,    KC_9, DE_COMM,
   // ├─────────────────────────────────────────────┤ ├──────────────────────────────────────────────┤
-       KC_PLUS,  KC_EQL, KC_UNDS, KC_MINS, KC_CIRC,       KC_0, RSFT_T(KC_4), RCTL_T(KC_5), RALT_T(KC_6), RGUI_T(KC_DOT),
+       DE_PLUS,  DE_EQL, DE_UNDS, DE_MINS, DE_CIRC,       KC_0, RSFT_T(KC_4), RCTL_T(KC_5), RALT_T(KC_6), RGUI_T(DE_DOT),
   // ├─────────────────────────────────────────────┤ ├──────────────────────────────────────────────┤
-       XXXXXXX, KC_COLN, KC_ASTR, KC_AMPR, KC_BSLS,    TD_MAKE,    KC_1,    KC_2,    KC_3, TD_BOOT,
+       XXXXXXX, DE_COLN, DE_ASTR, DE_AMPR, DE_BSLS,    TD_MAKE,    KC_1,    KC_2,    KC_3, TD_BOOT,
   // ╰─────────────────────────────────────────────┤ ├──────────────────────────────────────────────╯
                          DOTCOMM, KC_BSPC, _______,    _______, XXXXXXX
   //                   ╰───────────────────────────╯ ╰──────────────────╯
   ),
-
-  [LAYER_NAV] = LAYOUT(
+  [LAYER_NAV] = LAYOUT_wrapper(
   // ╭─────────────────────────────────────────────╮ ╭──────────────────────────────────────────────╮
-       LGUI(KC_Q),DF_QWER,DF_APTM,XXXXXXX, KC_VOLU,       KC_H,    KC_J,    KC_K,    KC_L, KC_HOME,
+       LGUI(KC_Q),XXXXXXX,XXXXXXX,XXXXXXX, KC_VOLU,       KC_H,    KC_J,    KC_K,    KC_L, KC_HOME,
   // ├─────────────────────────────────────────────┤ ├──────────────────────────────────────────────┤
        KC_LGUI, KC_LALT, KC_LCTL, LSFT_T(KC_TAB),KC_VOLD,KC_LEFT,KC_DOWN,  KC_UP, KC_RGHT,  KC_END,
   // ├─────────────────────────────────────────────┤ ├──────────────────────────────────────────────┤
@@ -124,7 +93,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //             ╰─────────────────────────────────╯ ╰──────────────────╯
   ),
 
-    [LAYER_FUN] = LAYOUT(
+    [LAYER_FUN] = LAYOUT_wrapper(
   // ╭─────────────────────────────────────────────╮ ╭──────────────────────────────────────────────╮
         KC_F12,   KC_F7,   KC_F8,   KC_F9, KC_PSCR,    XXXXXXX, XXXXXXX, XXXXXXX, KC_ALGR, TD_SYSR,
   // ├─────────────────────────────────────────────┤ ├──────────────────────────────────────────────┤
@@ -135,7 +104,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                           KC_APP,  KC_SPC,  QK_REP,    XXXXXXX, XXXXXXX
   //                   ╰──────────────────────────╯ ╰──────────────────╯
   ),
-  [LAYER_MEDIA] = LAYOUT(
+  [LAYER_MEDIA] = LAYOUT_wrapper(
   // ╭─────────────────────────────────────────────╮ ╭──────────────────────────────────────────────╮
        XXXXXXX, KC_ALGR, XXXXXXX, XXXXXXX, KC_MNXT,    RGB_MOD, RGB_HUI, RGB_SAI, RGB_VAI, RGB_TOG,
   // ├─────────────────────────────────────────────┤ ├──────────────────────────────────────────────┤
@@ -146,7 +115,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                          XXXXXXX, XXXXXXX, XXXXXXX,    KC_MSTP, KC_MPLY
   //             ╰─────────────────────────────────╯ ╰──────────────────╯
   ),
-     [LAYER_NUM2] = LAYOUT(
+     [LAYER_NUM2] = LAYOUT_wrapper(
   // ╭─────────────────────────────────────────────╮ ╭──────────────────────────────────────────────╮
        KC_LCBR,   KC_7,     KC_8,    KC_9, KC_RCBR,    XXXXXXX, XXXXXXX, XXXXXXX, KC_ALGR, TD_SYSR,
   // ├─────────────────────────────────────────────┤ ├──────────────────────────────────────────────┤
@@ -157,7 +126,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                          KC_LPRN, KC_RPRN, KC_UNDS,    XXXXXXX, XXXXXXX
   //                   ╰───────────────────────────╯ ╰──────────────────╯
   ),
-  [LAYER_POINTER] = LAYOUT(
+  [LAYER_POINTER] = LAYOUT_wrapper(
   // ╭─────────────────────────────────────────────╮ ╭─────────────────────────────────────────────╮
         MA_TKO,  MA_GRO,  MA_OFS,  MA_LMT,  MA_TOG,   DPI_MOD, S_D_MOD, _______, _______,  L_LOCK,
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
@@ -179,7 +148,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                             KC_ESC,  KC_SPC, M_NUM2,   _______,  THUMR2
   //                   ╰───────────────────────────╯ ╰──────────────────╯
   ),
-  [LAYER_WM] = LAYOUT(
+  [LAYER_WM] = LAYOUT_wrapper(
   // ╭─────────────────────────────────────────────╮ ╭─────────────────────────────────────────────╮
        _______, _______, _______, _______, _______,   LGUI(LALT(KC_RIGHT)), LGUI(KC_7), LGUI(KC_8), LGUI(KC_9), _______,
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
@@ -197,7 +166,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #    ifdef LEDMAP_ENABLE
 // clang-format off
 const uint8_t PROGMEM ledmaps[][MATRIX_ROWS][MATRIX_COLS] = {
-  [LAYER_QWERTY] = LAYOUT(
+  [LAYER_APTMAK] = LAYOUT(
   // ╭───────────────────────────────────╮ ╭────────────────────────────────────╮
         hOFF,  hOFF,  hOFF,  hOFF,  hOFF,     hOFF,  hOFF,  hOFF,  hOFF,  hOFF,
   // ├───────────────────────────────────┤ ├────────────────────────────────────┤
@@ -361,17 +330,6 @@ bool combo_should_trigger_km(uint16_t combo_index, combo_t *combo, uint16_t keyc
                 return false;
             }
             break;
-        case cana_capsword:
-        case cana_mouse2:
-        case cana_mouse1:
-        case cana_mouse3:
-        case cana_dragscroll:
-        case cana_caretscroll:
-        case cana_help:
-            if (!layer_state_is(LAYER_CANARY)) {
-                return false;
-            }
-            break;
         case aptmak_v:
         case aptmak_q:
         case aptmak_z:
@@ -414,3 +372,26 @@ report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
 bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
     return true;
 }
+
+const key_override_t quot_override = ko_make_basic(MOD_MASK_SHIFT, DE_QUOT, DE_DQUO);
+const key_override_t slsh_override = ko_make_basic(MOD_MASK_SHIFT, DE_SLSH, DE_QUES);
+const key_override_t pipe_override = ko_make_basic(MOD_MASK_SHIFT, DE_BSLS, DE_PIPE);
+const key_override_t tild_override = ko_make_basic(MOD_MASK_SHIFT, DE_GRV, DE_TILD);
+const key_override_t less_override = ko_make_basic(MOD_MASK_SHIFT, DE_LPRN, DE_LABK);
+const key_override_t more_override = ko_make_basic(MOD_MASK_SHIFT, DE_RPRN, DE_RABK);
+const key_override_t lcbr_override = ko_make_basic(MOD_MASK_SHIFT, DE_LBRC, DE_LCBR);
+const key_override_t rcbr_override = ko_make_basic(MOD_MASK_SHIFT, DE_RBRC, DE_RCBR);
+const key_override_t coln_override = ko_make_basic(MOD_MASK_SHIFT, DE_SCLN, DE_COLN);
+
+const key_override_t **key_overrides = (const key_override_t *[]){
+	&quot_override,
+    &slsh_override,
+    &pipe_override,
+    &tild_override,
+    &less_override,
+    &more_override,
+    &lcbr_override,
+    &rcbr_override,
+    &coln_override,
+	NULL // Null terminate the array of overrides!
+};
