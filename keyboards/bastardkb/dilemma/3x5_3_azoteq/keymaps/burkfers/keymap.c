@@ -19,6 +19,7 @@
 #include "quantum.h"
 #include QMK_KEYBOARD_H
 #include "burkfers.h"
+#include "keymap_german.h"
 
 #define TD_BOOT TD(U_TD_BOOT)
 #define TD_CLR TD(U_TD_CLR)
@@ -43,20 +44,26 @@
 #define M_NUM LT(LAYER_NUM, KC_M)
 
 #define GAME TG(LAYER_GAME)
-#define MCRPD DF(LAYER_MACROPAD)
 
-enum km_layers { LAYER_MACROPAD = LAYER_KM };
-#define OS_LGUI OSM(MOD_LGUI)
-#define OS_LALT OSM(MOD_LALT)
-#define OS_LCTL OSM(MOD_LCTL)
-#define OS_LSFT OSM(MOD_LSFT)
+#define LAYER_APTMAK LAYER_BASE
+
+#define LAYER_SYMNUM LAYER_NUM
+#define LAYER_NUM2 LAYER_SYM
+
+#define M_NUM2 LT(LAYER_NUM2, KC_M)
+
+#define GAME TG(LAYER_GAME)
 
 #define THUML1 LT(LAYER_NAV, KC_SPC)
 #define THUML2 LT(LAYER_POINTER, KC_TAB)
 #define THUML3 LT(LAYER_MEDIA, KC_ESC)
-#define THUMR1 LT(LAYER_NUM, KC_ENT)
-#define THUMR2 LT(LAYER_SYM, KC_BSPC)
+#define THUMR1 LT(LAYER_NUM, KC_BSPC)
+#define THUMR2 LT(LAYER_SYMNUM, KC_ENT)
 #define THUMR3 LT(LAYER_FUN, KC_DEL)
+
+enum km_layers {
+    LAYER_WM = LAYER_KM,
+};
 
 #ifdef COMBO_ENABLE
 #    include "g/keymap_combo.h"
@@ -64,51 +71,37 @@ enum km_layers { LAYER_MACROPAD = LAYER_KM };
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-  [LAYER_CANARY] = LAYOUT_wrapper(
+  [LAYER_APTMAK] = LAYOUT_wrapper(
   // ╭─────────────────────────────────────────────╮ ╭──────────────────────────────────────────────╮
-          KC_W,  ALG(L),    KC_Y,    KC_P,    KC_B,       KC_Z,    KC_F,    KC_O,  ALG(U), KC_QUOT,
+        QK_REP,  RALT_T(KC_W),    KC_F,    KC_P,    KC_B,       KC_J,    KC_L,    KC_U,  RALT_T(DE_Y), DE_QUOT,
   // ├─────────────────────────────────────────────┤ ├──────────────────────────────────────────────┤
-               ___GACS_L___(C, R, S, T),      KC_G,       KC_M,      ___GACS_R___(N, E, I, A),
+        ___GACS_L___(R,    S,    T,    H),    KC_K,       KC_X,    ___GACS_R___(N,   A,   I,    O),
   // ├─────────────────────────────────────────────┤ ├──────────────────────────────────────────────┤
-          KC_Q,    KC_J,    KC_V,    KC_D,    KC_K,       KC_X,    KC_H, KC_SLSH, KC_COMM,  KC_DOT,
+       XXXXXXX,    KC_C,    KC_G,    KC_D,    KC_Q,       DE_Z,    KC_M, KC_COMM,  DE_DOT, DE_SLSH,
   // ╰─────────────────────────────────────────────┤ ├──────────────────────────────────────────────╯
- // LT(LAYER_MEDIA, KC_ESC),       LT(LAYER_NAV, KC_SPC), QK_REP, LT(LAYER_NUM,KC_BSPC),     LT(LAYER_SYM, KC_ENT), KC_MUTE
-                          KC_BTN3,  THUML2,  THUML1,     THUMR1,  THUMR2, KC_MUTE
+                 MO(LAYER_MEDIA),  THUML1,  LT(LAYER_NAV, KC_ESC),   LT(LAYER_SYMNUM, KC_BSPC), LT(LAYER_SYMNUM, KC_E), XXXXXXX
   //                   ╰───────────────────────────╯ ╰──────────────────╯
   ),
-  [LAYER_QWERTY] = LAYOUT_wrapper(
+  [LAYER_SYMNUM] = LAYOUT_wrapper(
   // ╭─────────────────────────────────────────────╮ ╭──────────────────────────────────────────────╮
-          KC_Q,  ALG(W),    KC_E,    KC_R,    KC_T,       KC_Y,    KC_U,    KC_I,  ALG(O),    KC_P,
+       DE_EXLM,   DE_AT, DE_HASH,  DE_DLR, DE_PERC,    DE_SLSH,    KC_7,    KC_8,    KC_9, DE_COMM,
   // ├─────────────────────────────────────────────┤ ├──────────────────────────────────────────────┤
-              ___GACS_L___(A, S, D, F),       KC_G,       KC_H,      ___GACS_R___(J, K, L, QUOT),
+       DE_PLUS,  DE_EQL, DE_UNDS, DE_MINS, DE_CIRC,       KC_0, RSFT_T(KC_4), RCTL_T(KC_5), RALT_T(KC_6), RGUI_T(DE_DOT),
   // ├─────────────────────────────────────────────┤ ├──────────────────────────────────────────────┤
-          KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,       KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,
+       XXXXXXX, DE_COLN, DE_ASTR, DE_AMPR, DE_BSLS,    TD_MAKE,    KC_1,    KC_2,    KC_3, TD_BOOT,
   // ╰─────────────────────────────────────────────┤ ├──────────────────────────────────────────────╯
-                          KC_BTN3,  THUML2,  THUML1,     THUMR1,  THUMR2, KC_MUTE
-// LT(LAYER_MEDIA, KC_ESC),       LT(LAYER_POINTER, KC_TAB),LT(LAYER_NAV, KC_SPC),  LT(LAYER_SYM, KC_ENT),LT(LAYER_NUM,KC_BSPC), KC_MUTE
+                         DOTCOMM, KC_BSPC, _______,    _______, XXXXXXX, XXXXXXX
   //                   ╰───────────────────────────╯ ╰──────────────────╯
   ),
-  [LAYER_NUM] = LAYOUT_wrapper(
-  // ╭─────────────────────────────────────────────╮ ╭──────────────────────────────────────────────╮
-       KC_LBRC,    KC_7,    KC_8,    KC_9, KC_RBRC,    XXXXXXX, XXXXXXX, XXXXXXX, KC_ALGR, TD_SYSR,
-  // ├─────────────────────────────────────────────┤ ├──────────────────────────────────────────────┤
-       KC_SCLN,    KC_4,    KC_5,    KC_6,  KC_EQL,    XXXXXXX, OS_LSFT, OS_LCTL, OS_LALT, OS_LGUI,
-  // ├─────────────────────────────────────────────┤ ├──────────────────────────────────────────────┤
-        KC_GRV,    KC_1,    KC_2,    KC_3, KC_BSLS,    XXXXXXX, XXXXXXX,  TD_CLR, TD_MAKE, TD_BOOT,
-  // ╰─────────────────────────────────────────────┤ ├──────────────────────────────────────────────╯
-                         DOTCOMM,    KC_0, KC_MINS,    XXXXXXX, XXXXXXX, KC_MUTE
-  //                   ╰───────────────────────────╯ ╰──────────────────╯
-  ),
-
   [LAYER_NAV] = LAYOUT_wrapper(
   // ╭─────────────────────────────────────────────╮ ╭──────────────────────────────────────────────╮
-       DF_CANA, DF_QWER, XXXXXXX, XXXXXXX, XXXXXXX,       KC_H,    KC_J,    KC_K,    KC_L,   KC_NO,
+       LGUI(KC_Q),XXXXXXX,XXXXXXX,XXXXXXX, KC_VOLU,       KC_H,    KC_J,    KC_K,    KC_L, KC_HOME,
   // ├─────────────────────────────────────────────┤ ├──────────────────────────────────────────────┤
-       OS_LGUI, OS_LALT, OS_LCTL, OS_LSFT,   MCRPD,    KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT,  KC_DEL,
+       KC_LGUI, KC_LALT, KC_LCTL, LSFT_T(KC_TAB),KC_VOLD,KC_LEFT,KC_DOWN,  KC_UP, KC_RGHT,  KC_END,
   // ├─────────────────────────────────────────────┤ ├──────────────────────────────────────────────┤
-       TD_BOOT, TD_MAKE,  TD_CLR, XXXXXXX,    GAME,    KC_HOME, KC_PGDN, KC_PGUP,  KC_END,  KC_INS,
+       TD_BOOT, TD_MAKE,  TD_CLR,  KC_INS,    GAME,    XXXXXXX, KC_PGUP, KC_PGDN,  KC_END,  KC_INS,
   // ╰─────────────────────────────────────────────┤ ├──────────────────────────────────────────────╯
-                         XXXXXXX, XXXXXXX, XXXXXXX,      KC_ENT,KC_BSPC, KC_MUTE
+                         XXXXXXX, XXXXXXX, _______,    _______,  KC_SPC, XXXXXXX
   //             ╰─────────────────────────────────╯ ╰──────────────────╯
   ),
 
@@ -118,9 +111,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├─────────────────────────────────────────────┤ ├──────────────────────────────────────────────┤
         KC_F11,   KC_F4,   KC_F5,   KC_F6, KC_SCRL,    XXXXXXX, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI,
   // ├─────────────────────────────────────────────┤ ├──────────────────────────────────────────────┤
-        KC_F10,   KC_F1,   KC_F2,   KC_F3, KC_PAUS,    XXXXXXX, XXXXXXX,  TD_CLR, TD_MAKE, TD_BOOT,
+        KC_F10,   KC_F1,   KC_F2,   KC_F3, KC_PAUS,    XXXXXXX, KC_PSCR, LGUI(KC_PSCR), XXXXXXX, XXXXXXX,
   // ╰─────────────────────────────────────────────┤ ├──────────────────────────────────────────────╯
-                          KC_APP, QK_AREP,  KC_SPC,    XXXXXXX, XXXXXXX, KC_MUTE
+                          KC_APP,  KC_SPC,  QK_REP,    XXXXXXX, XXXXXXX, XXXXXXX
   //                   ╰──────────────────────────╯ ╰──────────────────╯
   ),
   [LAYER_MEDIA] = LAYOUT_wrapper(
@@ -131,29 +124,29 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├─────────────────────────────────────────────┤ ├──────────────────────────────────────────────┤
        TD_BOOT, TD_MAKE,  TD_CLR, XXXXXXX, KC_MPRV,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   // ╰─────────────────────────────────────────────┤ ├──────────────────────────────────────────────╯
-                         XXXXXXX, XXXXXXX, XXXXXXX,    KC_MPLY, KC_MSTP, KC_MUTE
+                         XXXXXXX, XXXXXXX, XXXXXXX,    KC_MSTP, KC_MPLY, XXXXXXX
   //             ╰─────────────────────────────────╯ ╰──────────────────╯
   ),
-     [LAYER_SYM] = LAYOUT_wrapper(
+     [LAYER_NUM2] = LAYOUT_wrapper(
   // ╭─────────────────────────────────────────────╮ ╭──────────────────────────────────────────────╮
-       KC_LCBR, KC_AMPR, KC_ASTR, KC_LPRN, KC_RCBR,    XXXXXXX, XXXXXXX, XXXXXXX, KC_ALGR, TD_SYSR,
+       KC_LCBR,   KC_7,     KC_8,    KC_9, KC_RCBR,    XXXXXXX, XXXXXXX, XXXXXXX, KC_ALGR, TD_SYSR,
   // ├─────────────────────────────────────────────┤ ├──────────────────────────────────────────────┤
-       KC_COLN,  KC_DLR, KC_PERC, KC_CIRC, KC_PLUS,    XXXXXXX, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI,
+       KC_COLN,   KC_4,     KC_5,    KC_6, KC_PLUS,    XXXXXXX, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI,
   // ├─────────────────────────────────────────────┤ ├──────────────────────────────────────────────┤
-       KC_TILD, KC_EXLM,   KC_AT, KC_HASH, KC_PIPE,    XXXXXXX, XXXXXXX,  TD_CLR, TD_MAKE, TD_BOOT,
+       KC_TILD,   KC_1,     KC_2,    KC_3, KC_PIPE,    XXXXXXX, XXXXXXX,  TD_CLR, TD_MAKE, TD_BOOT,
   // ╰─────────────────────────────────────────────┤ ├──────────────────────────────────────────────╯
-                         KC_LPRN, KC_RPRN, KC_UNDS,    XXXXXXX, XXXXXXX, KC_MUTE
+                         KC_LPRN, KC_RPRN, KC_UNDS,    XXXXXXX, XXXXXXX, XXXXXXX
   //                   ╰───────────────────────────╯ ╰──────────────────╯
   ),
   [LAYER_POINTER] = LAYOUT_wrapper(
   // ╭─────────────────────────────────────────────╮ ╭─────────────────────────────────────────────╮
-       _______, _______, _______, _______, _______,   DPI_MOD, S_D_MOD, _______, _______,  L_LOCK,
+        MA_TKO,  MA_GRO,  MA_OFS,  MA_LMT,  MA_TOG,   DPI_MOD, S_D_MOD, _______, _______,  L_LOCK,
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
-       _______, _______, _______, _______, _______,   KC_BTN4, KC_BTN5, _______, _______, _______,
+       _______, _______, _______, _______, _______,   KC_BTN4, KC_BTN5, PM_MO(PM_CARET), PM_MO(PM_VOL), PM_MO(PM_HISTORY),
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
        _______, _______, _______, _______, _______,   KC_BTN2, KC_BTN1, SNIPING, DRGSCRL, KC_BTN3,
   // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────╯
-                         _______, _______,  L_LOCK,   _______, _______, KC_MUTE
+                         _______, _______,  L_LOCK,   _______, _______, XXXXXXX
   //                   ╰───────────────────────────╯ ╰──────────────────╯
   ),
   [LAYER_GAME] = LAYOUT_wrapper(
@@ -164,18 +157,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
        KC_LCTL,    KC_Z,    KC_X,    KC_C,    KC_V,      KC_N,    KC_M, KC_COMM,  KC_DOT,    GAME,
   // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────╯
-                            KC_ESC,  M_NUM, KC_SPC,   _______, MO(LAYER_NAV), KC_MUTE
+                            KC_ESC,  KC_SPC, M_NUM2,   _______,  THUMR2, XXXXXXX
   //                   ╰───────────────────────────╯ ╰──────────────────╯
   ),
-  [LAYER_MACROPAD] = LAYOUT_wrapper(
+  [LAYER_WM] = LAYOUT_wrapper(
   // ╭─────────────────────────────────────────────╮ ╭─────────────────────────────────────────────╮
-       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,      KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
+       _______, _______, _______, _______, _______,   LGUI(LALT(KC_RIGHT)), LGUI(KC_7), LGUI(KC_8), LGUI(KC_9), _______,
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
-       KC_LSFT,    KC_A,    KC_S,    KC_D,    KC_F,      KC_H, ___GACS_R___(   J,   K,   L, QUOT),
+       _______, _______, _______, _______, _______,   LGUI(LALT(KC_LEFT)),  LGUI(KC_4), LGUI(KC_5), LGUI(KC_6), _______,
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
-       C(A(KC_1)), C(A(KC_2)), C(A(KC_3)), C(A(KC_4)), C(A(KC_5)),      KC_N,    KC_M, KC_COMM,  KC_DOT, DF(LAYER_BASE),
+       _______, _______, _______, _______, _______,   LALT(KC_TAB),   LGUI(KC_1), LGUI(KC_2), LGUI(KC_3), _______,
   // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────╯
-                            KC_P,  KC_Y, KC_SPC,   _______, MO(LAYER_NAV), KC_MUTE
+                         _______, _______, _______,   _______, _______, XXXXXXX
   //                   ╰───────────────────────────╯ ╰──────────────────╯
   ),
 };
@@ -283,17 +276,6 @@ const uint8_t PROGMEM ledmaps[][MATRIX_ROWS][MATRIX_COLS] = {
                       hOFF,  hOFF,  hOFF,     hOFF,  hOFF,  hOFF
   //               ╰─────────────────────╯ ╰──────────────╯
   ),
-  [LAYER_MACROPAD] = LAYOUT_wrapper(
-  // ╭───────────────────────────────────╮ ╭────────────────────────────────────╮
-        hOFF,  hOFF,  hOFF,  hOFF,  hOFF,     hOFF,  hOFF,  hOFF,  hOFF,  hOFF,
-  // ├───────────────────────────────────┤ ├────────────────────────────────────┤
-        hOFF,  hOFF,  hOFF,  hOFF,  hOFF,     hOFF,  hOFF,  hOFF,  hOFF,  hOFF,
-  // ├───────────────────────────────────┤ ├────────────────────────────────────┤
-        hOFF,  hOFF,  hOFF,  hOFF,  hOFF,     hOFF,  hOFF,  hOFF,  hOFF,  hOFF,
-  // ╰───────────────────────────────────┤ ├────────────────────────────────────╯
-                      hOFF,  hOFF,  hOFF,     hOFF,  hOFF,  hOFF
-  //               ╰─────────────────────╯ ╰──────────────╯
-  ),
 };
 // clang-format off
 #endif
@@ -330,20 +312,47 @@ uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
 
 bool combo_should_trigger_km(uint16_t combo_index, combo_t *combo, uint16_t keycode, keyrecord_t *record) {
     switch (combo_index) {
-        case cana_esc:
-             if (layer_state_is(LAYER_CANARY)) {
-            return false;
-        }
-        case qwer_esc:
-             if (layer_state_is(LAYER_QWERTY)) {
-            return false;
-        }
-        case game_esc:
+        case capsword:
+        case mouse2:
+        case mouse1:
+        case mouse3:
+        case dragscroll:
+        case caretscroll:
+            if (!layer_state_is(LAYER_BASE)) {
+                return false;
+            }
+            break;
+        case game_zx_t:
         case game_rf_g:
         case game_fv_b:
             if (!layer_state_is(LAYER_GAME)) {
                 return false;
             }
+            break;
+        case aptmak_v:
+        case aptmak_q:
+        case aptmak_z:
+        case aptmak_lbrc:
+        case aptmak_lprn:
+        case aptmak_rbrc:
+        case aptmak_rprn:
+        case aptmak_mouse2:
+        case aptmak_mouse1:
+        case aptmak_mouse3:
+        case aptmak_dragscroll:
+        case aptmak_caretscroll:
+        case aptmak_ent:
+        // case aptmak_thumbcombo_right:
+        case aptmak_capsword:
+        case aptmak_bsls:
+        case aptmak_tab:
+        case aptmak_del:
+        case aptmak_scln:
+        case aptmak_grv:
+            if (!layer_state_is(LAYER_APTMAK)) {
+                return false;
+            }
+            break;
     }
 
     return true;
@@ -352,14 +361,15 @@ bool combo_should_trigger_km(uint16_t combo_index, combo_t *combo, uint16_t keyc
 #ifdef ENCODER_MAP_ENABLE
 // clang-format off
 const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
-    [LAYER_BASE]       = {ENCODER_CCW_CW(KC_WH_U, KC_WH_D),    ENCODER_CCW_CW( KC_VOLD,  KC_VOLU)},
-    [LAYER_FUN]        = {ENCODER_CCW_CW(  KC_NO,   KC_NO),    ENCODER_CCW_CW( KC_LEFT,  KC_RGHT)},
+    [LAYER_APTMAK]       = {ENCODER_CCW_CW(KC_WH_U, KC_WH_D),    ENCODER_CCW_CW( KC_VOLD,  KC_VOLU)},
+    [LAYER_SYMNUM]        = {ENCODER_CCW_CW(  KC_NO,   KC_NO),    ENCODER_CCW_CW( KC_LEFT,  KC_RGHT)},
     [LAYER_NAV]        = {ENCODER_CCW_CW(  KC_NO,   KC_NO),    ENCODER_CCW_CW(   KC_UP,  KC_DOWN)},
-    [LAYER_POINTER]    = {ENCODER_CCW_CW(  KC_NO,   KC_NO),    ENCODER_CCW_CW( RGB_VAD,  RGB_VAI)},
-    [LAYER_NUM]        = {ENCODER_CCW_CW(  KC_NO,   KC_NO),    ENCODER_CCW_CW( RGB_SPD,  RGB_SPI)},
-    [LAYER_SYM]        = {ENCODER_CCW_CW(  KC_NO,   KC_NO),    ENCODER_CCW_CW( KC_LEFT,  KC_RGHT)},
-    [LAYER_GAME]       = {ENCODER_CCW_CW(  KC_NO,   KC_NO),    ENCODER_CCW_CW( KC_VOLD,  KC_VOLU)},
-    [LAYER_MACROPAD]   = {ENCODER_CCW_CW(  KC_NO,   KC_NO),    ENCODER_CCW_CW( KC_VOLD,  KC_VOLU)},
+    [LAYER_FUN]    = {ENCODER_CCW_CW(  KC_NO,   KC_NO),    ENCODER_CCW_CW( RGB_VAD,  RGB_VAI)},
+    [LAYER_MEDIA]        = {ENCODER_CCW_CW(  KC_NO,   KC_NO),    ENCODER_CCW_CW( RGB_SPD,  RGB_SPI)},
+    [LAYER_NUM2]        = {ENCODER_CCW_CW(  KC_NO,   KC_NO),    ENCODER_CCW_CW( KC_LEFT,  KC_RGHT)},
+    [LAYER_POINTER]       = {ENCODER_CCW_CW(  KC_NO,   KC_NO),    ENCODER_CCW_CW( KC_VOLD,  KC_VOLU)},
+    [LAYER_GAME]   = {ENCODER_CCW_CW(  KC_NO,   KC_NO),    ENCODER_CCW_CW( KC_VOLD,  KC_VOLU)},
+    [LAYER_WM]   = {ENCODER_CCW_CW(  KC_NO,   KC_NO),    ENCODER_CCW_CW( KC_VOLD,  KC_VOLU)}
 };
 // clang-format on
 #endif // ENCODER_MAP_ENABLE
@@ -409,7 +419,27 @@ const char *layer_to_string[] = {
     [LAYER_SYM]        = "sym",
     [LAYER_MEDIA]      = "media",
     [LAYER_GAME]       = "game",
-    [LAYER_MACROPAD]   = "macro"
     // clang-format on
 };
 #endif
+
+const key_override_t quot_override = ko_make_basic(MOD_MASK_SHIFT, DE_QUOT, DE_DQUO);
+const key_override_t slsh_override = ko_make_basic(MOD_MASK_SHIFT, DE_SLSH, DE_QUES);
+const key_override_t pipe_override = ko_make_basic(MOD_MASK_SHIFT, DE_BSLS, DE_PIPE);
+const key_override_t tild_override = ko_make_basic(MOD_MASK_SHIFT, DE_GRV, DE_TILD);
+const key_override_t less_override = ko_make_basic(MOD_MASK_SHIFT, DE_LPRN, DE_LABK);
+const key_override_t more_override = ko_make_basic(MOD_MASK_SHIFT, DE_RPRN, DE_RABK);
+const key_override_t lcbr_override = ko_make_basic(MOD_MASK_SHIFT, DE_LBRC, DE_LCBR);
+const key_override_t rcbr_override = ko_make_basic(MOD_MASK_SHIFT, DE_RBRC, DE_RCBR);
+
+const key_override_t **key_overrides = (const key_override_t *[]){
+	&quot_override,
+    &slsh_override,
+    &pipe_override,
+    &tild_override,
+    &less_override,
+    &more_override,
+    &lcbr_override,
+    &rcbr_override,
+	NULL // Null terminate the array of overrides!
+};
