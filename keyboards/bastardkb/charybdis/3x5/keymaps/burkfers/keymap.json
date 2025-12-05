@@ -1,0 +1,6 @@
+{
+    "modules": [
+        "eynsai/hires_dragscroll",
+        "drashna/pointing_device_accel"
+    ]
+}

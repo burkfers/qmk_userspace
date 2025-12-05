@@ -31,20 +31,24 @@
 
 #define SPLIT_HAND_PIN GP15
 #define SPLIT_HAND_PIN_LOW_IS_LEFT
-#define USB_VBUS_PIN GP19
+// #define USB_VBUS_PIN GP19
 
 // #define MOUSE_EXENDED_REPORT
 #undef POINTING_DEVICE_TASK_THROTTLE_MS
 #define POINTING_DEVICE_TASK_THROTTLE_MS 5
-// #define POINTING_DEVICE_TASK_THROTTLE_MS 1
 
 #ifdef VIA_ENABLE
 #    define DYNAMIC_KEYMAP_LAYER_COUNT 10
 #endif
 
-#ifdef MACCEL_ENABLE
-#    define MACCEL_TAKEOFF 2.0
-#    define MACCEL_GROWTH_RATE 0.25
-#    define MACCEL_OFFSET 2.2
-#    define MACCEL_LIMIT 0.1
-#endif
+#define POINTING_DEVICE_ACCEL_TAKEOFF 2.0      // lower/higher value = curve takes off more smoothly/abruptly
+#define POINTING_DEVICE_ACCEL_GROWTH_RATE 0.25 // lower/higher value = curve reaches its upper limit slower/faster
+#define POINTING_DEVICE_ACCEL_OFFSET 2.2       // lower/higher value = acceleration kicks in earlier/later
+#define POINTING_DEVICE_ACCEL_LIMIT 0.1        // lower limit of accel curve (minimum acceleration factor)
+
+#define HIRES_DRAGSCROLL_MULTIPLIER_H 0.04
+#define HIRES_DRAGSCROLL_MULTIPLIER_V 0.04
+
+// #define FLOW_TAP_TERM 150
+#define CHORDAL_HOLD
+// #define HOLD_ON_OTHER_KEY_PRESS

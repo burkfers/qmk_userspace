@@ -41,10 +41,9 @@
 #define GAME TG(LAYER_GAME)
 
 #define THUML1 LT(LAYER_NAV, KC_SPC)
-#define THUML2 LT(LAYER_POINTER, KC_TAB)
-#define THUML3 LT(LAYER_MEDIA, KC_ESC)
-#define THUMR1 LT(LAYER_NUM, KC_BSPC)
-#define THUMR2 LT(LAYER_SYMNUM, KC_ENT)
+#define THUML2 LT(LAYER_POINTER, KC_ESC)
+#define THUMR1 LT(LAYER_SYMNUM, KC_E)
+#define THUMR2 LT(LAYER_SYMNUM, KC_BSPC)
 #define THUMR3 LT(LAYER_FUN, KC_DEL)
 
 enum km_layers {
@@ -67,7 +66,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├─────────────────────────────────────────────┤ ├──────────────────────────────────────────────┤
        XXXXXXX,    KC_C,    KC_G,    KC_D,    KC_Q,       DE_Z,    KC_M, KC_COMM,  DE_DOT, DE_SLSH,
   // ╰─────────────────────────────────────────────┤ ├──────────────────────────────────────────────╯
-                 MO(LAYER_MEDIA),  THUML1,  LT(LAYER_NAV, KC_ESC),   LT(LAYER_SYMNUM, KC_BSPC), LT(LAYER_SYMNUM, KC_E)
+                 MO(LAYER_MEDIA),  THUML1,  THUML2,      THUMR2,  THUMR1
   //                   ╰───────────────────────────╯ ╰──────────────────╯
   ),
   [LAYER_SYMNUM] = LAYOUT_wrapper(
@@ -106,7 +105,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
   [LAYER_MEDIA] = LAYOUT_wrapper(
   // ╭─────────────────────────────────────────────╮ ╭──────────────────────────────────────────────╮
-       XXXXXXX, KC_ALGR, XXXXXXX, XXXXXXX, KC_MNXT,    RGB_MOD, RGB_HUI, RGB_SAI, RGB_VAI, RGB_TOG,
+       XXXXXXX, KC_ALGR, XXXXXXX, XXXXXXX, KC_MNXT,    RM_NEXT, RM_HUEU, RM_SATU, RM_VALU, RM_TOGG,
   // ├─────────────────────────────────────────────┤ ├──────────────────────────────────────────────┤
        KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, KC_MPLY,    KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, _______,
   // ├─────────────────────────────────────────────┤ ├──────────────────────────────────────────────┤
@@ -130,11 +129,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ╭─────────────────────────────────────────────╮ ╭─────────────────────────────────────────────╮
         MA_TKO,  MA_GRO,  MA_OFS,  MA_LMT,  MA_TOG,   DPI_MOD, S_D_MOD, _______, _______,  L_LOCK,
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
-       _______, _______, _______, _______, _______,   KC_BTN4, KC_BTN5, PM_MO(PM_CARET), PM_MO(PM_VOL), PM_MO(PM_HISTORY),
+       _______, _______, _______, _______, _______,   MS_BTN4, MS_BTN5, _______, _______, _______,
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
-       _______, _______, _______, _______, _______,   KC_BTN2, KC_BTN1, SNIPING, DRGSCRL, KC_BTN3,
+       _______, _______, _______, _______, _______,   MS_BTN2, MS_BTN1, SNIPING, DRGSCRL, MS_BTN3,
   // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────╯
-                         _______, _______,  L_LOCK,   _______, _______
+                         _______, _______, _______,   _______, _______
   //                   ╰───────────────────────────╯ ╰──────────────────╯
   ),
   [LAYER_GAME] = LAYOUT_wrapper(
@@ -281,7 +280,6 @@ uint16_t get_quick_tap_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case THUML1:
         case THUML2:
-        case THUML3:
         case THUMR1:
         case THUMR2:
         case THUMR3:
@@ -291,34 +289,12 @@ uint16_t get_quick_tap_term(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
-uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
-    if (IS_LAYER_ON(LAYER_APTMAK)) {
-        return 0;
-    } else if (IS_LAYER_ON(LAYER_POINTER)) {
-        return 0;
-    } else {
-        switch (tap_hold_keycode) {
-            case THUML1:
-            case THUML2:
-            case THUML3:
-            case THUMR1:
-            case THUMR2:
-            case THUMR3:
-                return 0;
-            default:
-                return 600;
-        }
-    }
-}
-
 bool combo_should_trigger_km(uint16_t combo_index, combo_t *combo, uint16_t keycode, keyrecord_t *record) {
     switch (combo_index) {
-        case capsword:
         case mouse2:
         case mouse1:
         case mouse3:
         case dragscroll:
-        case caretscroll:
             if (!layer_state_is(LAYER_BASE)) {
                 return false;
             }
@@ -341,10 +317,9 @@ bool combo_should_trigger_km(uint16_t combo_index, combo_t *combo, uint16_t keyc
         case aptmak_mouse1:
         case aptmak_mouse3:
         case aptmak_dragscroll:
-        case aptmak_caretscroll:
         case aptmak_ent:
         // case aptmak_thumbcombo_right:
-        case aptmak_capsword:
+        case capsword:
         case aptmak_bsls:
         case aptmak_tab:
         case aptmak_del:
@@ -360,7 +335,7 @@ bool combo_should_trigger_km(uint16_t combo_index, combo_t *combo, uint16_t keyc
 }
 
 layer_state_t layer_state_set_user(layer_state_t state) {
-   return update_tri_layer_state(state, LAYER_SYMNUM, LAYER_NAV, LAYER_FUN);
+    return update_tri_layer_state(state, LAYER_SYMNUM, LAYER_POINTER, LAYER_FUN);
 }
 
 #ifdef MACCEL_ENABLE
@@ -383,8 +358,8 @@ const key_override_t lcbr_override = ko_make_basic(MOD_MASK_SHIFT, DE_LBRC, DE_L
 const key_override_t rcbr_override = ko_make_basic(MOD_MASK_SHIFT, DE_RBRC, DE_RCBR);
 const key_override_t coln_override = ko_make_basic(MOD_MASK_SHIFT, DE_SCLN, DE_COLN);
 
-const key_override_t **key_overrides = (const key_override_t *[]){
-	&quot_override,
+const key_override_t *key_overrides[] = {
+    &quot_override,
     &slsh_override,
     &pipe_override,
     &tild_override,
@@ -393,5 +368,28 @@ const key_override_t **key_overrides = (const key_override_t *[]){
     &lcbr_override,
     &rcbr_override,
     &coln_override,
-	NULL // Null terminate the array of overrides!
+    NULL // Null terminate the array of overrides!
 };
+
+// Associate our tap dance key with its functionality
+tap_dance_action_t tap_dance_actions[] = {
+    [U_TD_BOOT] = ACTION_TAP_DANCE_FN(u_td_fn_boot),          [U_TD_CLR] = ACTION_TAP_DANCE_FN(u_td_fn_clr),
+#ifdef EE_HANDS
+    [U_TD_MAKEL] = ACTION_TAP_DANCE_FN(u_td_fn_make_l),       [U_TD_MAKER] = ACTION_TAP_DANCE_FN(u_td_fn_make_r),
+#else
+    [U_TD_MAKE] = ACTION_TAP_DANCE_FN(u_td_fn_make),
+#endif
+    [U_TD_SYSRQ] = ACTION_TAP_DANCE_FN(u_td_fn_sysrq_reisub),
+};
+
+bool get_chordal_hold(uint16_t tap_hold_keycode, keyrecord_t *tap_hold_record, uint16_t other_keycode, keyrecord_t *other_record) {
+    // Exceptionally allow some one-handed chords for hotkeys.
+    switch (tap_hold_keycode) {
+        case THUMR1:
+        case THUMR2:
+            return true;
+            break;
+    }
+    // Otherwise defer to the opposite hands rule.
+    return get_chordal_hold_default(tap_hold_record, other_record);
+}

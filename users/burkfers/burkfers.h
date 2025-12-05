@@ -43,10 +43,10 @@ enum user_layers {
     LAYER_GAME,
     LAYER_NUM,
     LAYER_NAV,
+    LAYER_POINTER,
     LAYER_FUN,
     LAYER_MEDIA,
     LAYER_SYM,
-    LAYER_POINTER,
     LAYER_KM
     // clang-format on
 };
