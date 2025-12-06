@@ -1,8 +1,6 @@
 
 #include "rgb.h"
-#include "action_layer.h"
-#include "host.h"
-#include "rgb_matrix.h"
+#include QMK_KEYBOARD_H
 
 __attribute__((weak)) bool is_custom_rgb_indicator(uint8_t index) {
     return (index == 12 || index == 13 || index == 14 || index == 30 || index == 31 || index == 32);
@@ -13,7 +11,7 @@ __attribute__((weak)) bool rgb_matrix_indicators_advanced_km(uint8_t led_min, ui
 
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     int  layer        = get_highest_layer(layer_state | default_layer_state);
-    bool caps_lock_on = host_keyboard_led_state().caps_lock;
+    bool caps_lock_on = host_keyboard_led_state().caps_lock || is_caps_word_on();
 
     for (uint8_t row = 0; row < MATRIX_ROWS; ++row) {
         for (uint8_t col = 0; col < MATRIX_COLS; ++col) {

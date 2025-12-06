@@ -31,21 +31,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (!process_layer_lock(keycode, record, L_LOCK)) {
         return false;
     }
-    process_caps_word_lock(keycode, record);
 
     switch (keycode) {
-        case CAPS_WORD_LOCK:
-            // Toggle `caps_word_lock_on`
-            if (record->event.pressed) {
-                if (caps_word_lock_on) {
-                    caps_word_lock_disable();
-                    return false;
-                } else {
-                    caps_word_lock_enable();
-                    return false;
-                }
-            }
-            return false;
         case C_LT:
             if (record->event.pressed) {
                 static uint8_t current_default_layer = LAYER_BASE;

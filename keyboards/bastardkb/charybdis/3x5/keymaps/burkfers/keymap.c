@@ -144,7 +144,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
        KC_LCTL,    KC_Z,    KC_X,    KC_C,    KC_V,      KC_N,    KC_M, KC_COMM,  KC_DOT,    GAME,
   // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────╯
-                            KC_ESC,  KC_SPC, M_NUM2,   _______,  THUMR2
+                            KC_ESC,  KC_SPC, M_NUM2,   _______, LT(LAYER_SYMNUM, KC_ENT)
   //                   ╰───────────────────────────╯ ╰──────────────────╯
   ),
   [LAYER_WM] = LAYOUT_wrapper(
@@ -385,11 +385,38 @@ tap_dance_action_t tap_dance_actions[] = {
 bool get_chordal_hold(uint16_t tap_hold_keycode, keyrecord_t *tap_hold_record, uint16_t other_keycode, keyrecord_t *other_record) {
     // Exceptionally allow some one-handed chords for hotkeys.
     switch (tap_hold_keycode) {
+        case THUML1:
+        case THUML2:
         case THUMR1:
         case THUMR2:
+        case THUMR3:
+        case M_NUM2:
             return true;
             break;
     }
     // Otherwise defer to the opposite hands rule.
     return get_chordal_hold_default(tap_hold_record, other_record);
+}
+
+bool caps_word_press_user(uint16_t keycode) {
+    switch (keycode) {
+        // Keycodes that continue Caps Word, with shift applied.
+        case KC_A ... KC_Z:
+            add_weak_mods(MOD_BIT(KC_LSFT)); // Apply shift to next key.
+            return true;
+
+        // Keycodes that continue Caps Word, without shifting.
+        case KC_1 ... KC_0:
+        case KC_BSPC:
+        case KC_DEL:
+        case DE_UNDS:
+        case DE_MINS:
+        case DE_LPRN:
+        case DE_RPRN:
+            return true;
+
+        default:
+            printf("caps word cancel: %i\n", keycode);
+            return false; // Deactivate Caps Word.
+    }
 }

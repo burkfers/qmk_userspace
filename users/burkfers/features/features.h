@@ -15,12 +15,6 @@
 #    endif
 #endif
 
-#include "features/caps_word/caps_word.h" // IWYU pragma: keep
-
-#ifdef ACHORDION_ENABLE
-#    include "features/achordion/achordion.h" // IWYU pragma: keep
-#endif
-
 #include "features/layer_lock/layer_lock.h" // IWYU pragma: keep
 
 #ifdef LEADER_ENABLE

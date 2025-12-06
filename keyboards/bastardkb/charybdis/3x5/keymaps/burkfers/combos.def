@@ -5,7 +5,7 @@ COMB(game_zx_t,             KC_T,                      KC_Z, KC_X)
 COMB(game_rf_g,             KC_G,                      KC_R, KC_F)
 COMB(game_fv_b,             KC_B,                      KC_F, KC_V)
 
-COMB(capsword,       CAPS_WORD_LOCK,            LSFT_T(KC_H), RSFT_T(KC_N))
+COMB(capsword,       CW_TOGG,            LSFT_T(KC_H), RSFT_T(KC_N))
 
 COMB(mouse2,                MS_BTN2,                   KC_N, KC_H)
 COMB(mouse1,                MS_BTN1,                   KC_M, RSFT_T(KC_J))
